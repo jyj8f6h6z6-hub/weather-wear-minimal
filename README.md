@@ -1,3 +1,5 @@
+# 今天怎麼穿 v6 — Fashion Editorial UI
+
 # 今天怎麼穿？ v5
 
 這版重點是「結果頁美化」，功能沿用 v4：定位、附近、Google Places 目的地搜尋、天氣與穿搭判斷。
@@ -20,3 +22,11 @@
 5. VS Code 左側 Source Control → Commit → Sync Changes。
 
 不要重新 Initialize Repository，也不用重新 Publish Branch。
+
+
+## v6 視覺更新
+- 人物改為較修長的時尚插畫比例，不再使用大頭 Q 版。
+- 服裝配色改為黑、米白、卡其、橄欖、丹寧等低飽和色。
+- 雨傘改為黑色都會長傘；包款改為簡潔 tote / shoulder bag 視覺。
+- 結果頁改為 IG fashion editorial 版面，移除大圓圈兒童感背景。
+- 晴雨改用環境光、雨幕等低存在感場景表現。

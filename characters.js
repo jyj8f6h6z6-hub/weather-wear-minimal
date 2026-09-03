@@ -1,102 +1,109 @@
-function characterSVG(person, outfit, pose = 'stand', options = {}) {
-  const isA = person === 'a';
-  const walk = pose === 'walk';
-  const skin = isA ? '#efbd9a' : '#f2c09e';
-  const skinDark = isA ? '#d99a75' : '#dda07a';
-  const hair = isA ? '#303033' : '#4a3435';
-  const hairHi = isA ? '#514b4a' : '#684b4b';
-  const palette = isA
-    ? { tee: '#7698b7', tee2: '#5f82a2', bottom: '#516477', outer: '#b19b82', outer2: '#927d67', accent: '#d5e6f4' }
-    : { tee: '#ce929e', tee2: '#b87b88', bottom: '#796b78', outer: '#b6a091', outer2: '#987f75', accent: '#f4d9df' };
 
+function characterSVG(person, outfit, pose = 'stand', options = {}) {
+  const feminine = person === 'b';
+  const walk = pose === 'walk';
   const umbrella = !!outfit.umbrella;
-  const hasOuter = outfit.outer && outfit.outer !== 'none';
-  const heavy = outfit.outer === 'heavy';
-  const jacket = outfit.outer === 'jacket';
-  const light = outfit.outer === 'light';
-  const longSleeve = outfit.top === 'long';
+  const outer = outfit.outer || 'none';
+  const long = outfit.top === 'long';
+  const pants = outfit.bottom === 'pants';
   const shorts = outfit.bottom === 'shorts';
   const skirt = outfit.bottom === 'skirt';
-  const pants = outfit.bottom === 'pants';
-  const carryBag = options.carryBag !== false;
   const facing = options.facing || 'right';
-  const flip = facing === 'left' ? 'translate(220 0) scale(-1 1)' : '';
+  const flip = facing === 'left' ? 'translate(240 0) scale(-1 1)' : '';
 
-  const legLeft = walk ? 'M92 190 Q84 220 72 244' : 'M92 190 L87 244';
-  const legRight = walk ? 'M116 190 Q128 220 143 241' : 'M116 190 L121 244';
-  const armBack = walk ? 'M84 119 Q68 143 60 157' : 'M84 119 Q70 143 67 161';
-  const armFront = umbrella ? 'M126 120 Q142 102 151 87' : (walk ? 'M126 120 Q143 139 153 151' : 'M126 120 Q142 145 145 160');
+  // IG / editorial palette：低飽和、黑白灰、卡其、丹寧。
+  const skin = feminine ? '#E9B89B' : '#DDAF91';
+  const hair = feminine ? '#292524' : '#252525';
+  const ink = '#252525';
+  const cream = '#F4F0E8';
+  const denim = '#667889';
+  const charcoal = '#35383A';
+  const taupe = '#A59482';
+  const olive = '#72786B';
+  const topColor = feminine ? '#D8D0C7' : '#E5E0D7';
+  const accent = feminine ? '#7D6D68' : '#59636B';
 
-  const hairShape = isA
-    ? `<path d="M70 61Q70 18 108 18q41 0 43 45-9-11-19-18-34-20-22-3-47 18-47 18Z" fill="${hair}"/>
-       <path d="M80 42q28-25 57-4-11-8-29-7-16 0-28 11Z" fill="${hairHi}" opacity=".6"/>`
-    : `<path d="M63 66Q61 17 108 15q46 2 44 54c0 24-7 42-17 57l-18-10 6-63q-18-16-38 1l4 61-17 10Q62 99 63 66Z" fill="${hair}"/>
-       <path d="M76 39q34-28 63 2-14-10-31-9-18 1-32 7Z" fill="${hairHi}" opacity=".55"/>`;
+  const outerColor = outer === 'heavy' ? charcoal : outer === 'jacket' ? olive : taupe;
+  const legA = walk ? 'M105 226 C94 250 84 270 69 292' : 'M104 226 L99 292';
+  const legB = walk ? 'M129 226 C145 250 156 269 172 288' : 'M129 226 L135 292';
+  const armA = walk ? 'M92 137 C76 157 69 180 61 196' : 'M92 137 C78 161 73 181 70 197';
+  const armB = umbrella ? 'M145 137 C158 117 168 100 178 83' : (walk ? 'M145 137 C163 153 174 172 184 188' : 'M145 137 C159 160 165 181 168 198');
 
-  const lower = pants
-    ? `<path d="M82 166h45l7 67-21 2-9-48-8 48-21-2Z" fill="${palette.bottom}"/>`
+  const bottom = pants
+    ? `<path d="M96 202h44l7 73-19 3-10-55-7 55-20-3Z" fill="${charcoal}"/>`
     : shorts
-      ? `<path d="M80 165h48l3 33-22-1-5-18-5 18-23 1Z" fill="${palette.bottom}"/>`
-      : `<path d="M80 163h48l14 48H66Z" fill="${palette.bottom}"/><path d="M73 190h62" stroke="rgba(255,255,255,.22)" stroke-width="3"/>`;
+      ? `<path d="M94 202h47l3 34-21-1-6-20-5 20-22 1Z" fill="${denim}"/>`
+      : `<path d="M92 201h51l16 54H78Z" fill="${accent}"/>`;
 
-  const bodyFill = hasOuter ? palette.outer : palette.tee;
-  const sleeveWidth = hasOuter || longSleeve ? 18 : 12;
-  const collar = hasOuter
-    ? `<path d="M94 101l10 14 10-14" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="4" stroke-linejoin="round"/>`
-    : `<path d="M94 99q11 11 22 0" fill="none" stroke="${palette.accent}" stroke-width="4" stroke-linecap="round"/>`;
+  const footwear = feminine
+    ? `<path d="${walk ? 'M56 294q22 5 37-2' : 'M84 294h29'}" stroke="${ink}" stroke-width="9" stroke-linecap="round"/>
+       <path d="${walk ? 'M160 291q17 4 31-1' : 'M121 294h31'}" stroke="${ink}" stroke-width="9" stroke-linecap="round"/>`
+    : `<path d="${walk ? 'M55 294q24 7 40 0' : 'M83 294h31'}" stroke="${cream}" stroke-width="12" stroke-linecap="round"/>
+       <path d="${walk ? 'M160 291q18 6 34 0' : 'M121 294h33'}" stroke="${cream}" stroke-width="12" stroke-linecap="round"/>
+       <path d="${walk ? 'M56 297q24 6 40 0' : 'M83 297h31'}" stroke="${ink}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>
+       <path d="${walk ? 'M160 294q18 5 34 0' : 'M121 297h33'}" stroke="${ink}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+
+  const hairShape = feminine
+    ? `<path d="M80 78c-2-42 19-61 48-61 33 0 52 23 48 65-2 25-10 50-20 67l-17-10 5-78c-18-17-42-14-55 4l5 74-18 10C83 128 80 102 80 78Z" fill="${hair}"/>
+       <path d="M91 42c20-19 48-17 67 3-18-11-47-12-67-3Z" fill="#4A403C" opacity=".45"/>`
+    : `<path d="M84 65c2-31 20-48 47-48 27 0 43 15 47 42-11-10-20-13-32-14-18-2-37 4-62 20Z" fill="${hair}"/>
+       <path d="M94 34c19-13 44-11 61 4-19-7-40-8-61-4Z" fill="#4C4C4C" opacity=".42"/>`;
+
+  const torso = outer !== 'none'
+    ? `<path d="M91 128c8-17 20-25 38-25 20 0 34 9 42 27l-11 78H94Z" fill="${outerColor}"/>
+       <path d="M129 108v99" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+       <path d="M102 118l18 22 9-31 10 31 19-22" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="3"/>`
+    : `<path d="M94 128c7-17 19-25 36-25 19 0 31 9 39 27l-10 78H96Z" fill="${topColor}"/>
+       <path d="M111 108c9 8 25 8 34 0" fill="none" stroke="${accent}" stroke-width="3.5" stroke-linecap="round"/>`;
 
   return `
-  <svg class="character-svg" viewBox="0 0 220 280" role="img" aria-label="穿搭示意人物">
+  <svg class="character-svg editorial-character" viewBox="0 0 240 320" role="img" aria-label="穿搭示意">
     <g transform="${flip}">
-      <ellipse cx="108" cy="260" rx="58" ry="8" fill="rgba(33,29,24,.08)"/>
+      <ellipse cx="124" cy="304" rx="63" ry="7" fill="rgba(28,28,28,.08)"/>
 
       ${umbrella ? `
-        <g class="umbrella-art">
-          <path d="M151 88V45" stroke="#5f5d59" stroke-width="3.5" stroke-linecap="round"/>
-          <path d="M116 47q8-34 44-34t44 34Z" fill="#8da8b7"/>
-          <path d="M116 47q10-17 22 0 10-18 22 0 10-18 22 0 10-17 22 0" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"/>
-          <path d="M151 88q0 14 13 14 9 0 9-9" fill="none" stroke="#5f5d59" stroke-width="3.5" stroke-linecap="round"/>
-        </g>` : ''}
-
-      ${carryBag ? `<path d="M73 131q-14 16-11 51h18q1-30 8-43" fill="${palette.outer2}" opacity=".9"/><path d="M63 148q8-7 17 0" fill="none" stroke="rgba(255,255,255,.36)" stroke-width="2"/>` : ''}
+      <g class="fashion-umbrella">
+        <path d="M178 84V42" stroke="${ink}" stroke-width="2.5"/>
+        <path d="M132 44C142 12 177 4 207 21c12 7 20 17 25 29-28-8-67-9-100-6Z" fill="${ink}"/>
+        <path d="M133 44c19-5 39-5 57-2 16 2 29 5 41 8" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+        <path d="M178 83c0 15 6 21 16 21 8 0 12-5 12-11" fill="none" stroke="${ink}" stroke-width="2.5" stroke-linecap="round"/>
+      </g>` : ''}
 
       ${hairShape}
-      <circle cx="108" cy="67" r="31" fill="${skin}"/>
-      <path d="M81 61q5-17 18-23" fill="none" stroke="${hair}" stroke-width="9" stroke-linecap="round"/>
-      ${!isA ? `<path d="M132 46q11 7 13 19" fill="none" stroke="${hair}" stroke-width="9" stroke-linecap="round"/>` : ''}
+      <ellipse cx="130" cy="78" rx="35" ry="39" fill="${skin}"/>
+      <path d="M107 76c7-4 13-4 19 0M139 76c6-4 12-4 18 0" fill="none" stroke="${ink}" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="118" cy="79" r="2.1" fill="${ink}"/><circle cx="149" cy="79" r="2.1" fill="${ink}"/>
+      <path d="M128 94c6 3 11 3 17-1" fill="none" stroke="#9B6D61" stroke-width="2" stroke-linecap="round"/>
+      ${feminine ? `<path d="M113 97c10 8 23 8 33-1" fill="none" stroke="#9B6D61" stroke-width="1.2" opacity=".45"/>` : ''}
 
-      <ellipse cx="97" cy="66" rx="3" ry="4" fill="#3b3130"/>
-      <ellipse cx="119" cy="66" rx="3" ry="4" fill="#3b3130"/>
-      <circle cx="96" cy="65" r="1" fill="#fff"/><circle cx="118" cy="65" r="1" fill="#fff"/>
-      <ellipse cx="88" cy="78" rx="7" ry="3.3" fill="#ef9a9f" opacity=".42"/>
-      <ellipse cx="128" cy="78" rx="7" ry="3.3" fill="#ef9a9f" opacity=".42"/>
-      <path d="M101 79q7 6 14 0" fill="none" stroke="${skinDark}" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="${armA}" stroke="${outer !== 'none' ? outerColor : topColor}" stroke-width="${outer !== 'none' || long ? 17 : 12}" stroke-linecap="round"/>
+      <path d="${armB}" stroke="${outer !== 'none' ? outerColor : topColor}" stroke-width="${outer !== 'none' || long ? 17 : 12}" stroke-linecap="round"/>
+      ${outer === 'none' && !long ? `<circle cx="61" cy="196" r="6" fill="${skin}"/><circle cx="${umbrella ? 178 : 184}" cy="${umbrella ? 83 : 188}" r="6" fill="${skin}"/>` : ''}
 
-      <path d="${armBack}" stroke="${bodyFill}" stroke-width="${sleeveWidth}" stroke-linecap="round"/>
-      <path d="${armFront}" stroke="${bodyFill}" stroke-width="${sleeveWidth}" stroke-linecap="round"/>
-      ${!hasOuter && !longSleeve ? `<circle cx="60" cy="157" r="6" fill="${skin}"/><circle cx="${umbrella ? 151 : 153}" cy="${umbrella ? 87 : 151}" r="6" fill="${skin}"/>` : ''}
+      ${torso}
+      ${bottom}
 
-      <path d="M78 108q8-17 30-17t32 17l-8 59H84Z" fill="${bodyFill}"/>
-      ${collar}
-      ${hasOuter ? `<path d="M108 101v66" stroke="rgba(255,255,255,.58)" stroke-width="2.2"/>
-        <circle cx="114" cy="126" r="2" fill="rgba(255,255,255,.62)"/><circle cx="114" cy="141" r="2" fill="rgba(255,255,255,.62)"/>
-        ${heavy ? `<path d="M83 112q25-17 51 0" stroke="rgba(255,255,255,.32)" stroke-width="11" fill="none"/><path d="M85 153h46" stroke="${palette.outer2}" stroke-width="7" opacity=".45"/>` : ''}
-        ${jacket ? `<path d="M85 151h46" stroke="rgba(255,255,255,.20)" stroke-width="5"/>` : ''}
-        ${light ? `<path d="M88 108l14 17M128 108l-14 17" stroke="rgba(255,255,255,.36)" stroke-width="3"/>` : ''}` : ''}
+      <path d="${legA}" stroke="${skin}" stroke-width="17" stroke-linecap="round"/>
+      <path d="${legB}" stroke="${skin}" stroke-width="17" stroke-linecap="round"/>
+      ${pants ? `<path d="M107 217L99 286M130 217l5 69" stroke="${charcoal}" stroke-width="18" stroke-linecap="round"/>` : ''}
 
-      ${lower}
-      <path d="${legLeft}" stroke="${skin}" stroke-width="18" stroke-linecap="round"/>
-      <path d="${legRight}" stroke="${skin}" stroke-width="18" stroke-linecap="round"/>
-      ${pants ? `<path d="M92 181L87 232M116 181l5 51" stroke="${palette.bottom}" stroke-width="19" stroke-linecap="round"/>` : ''}
+      ${footwear}
 
-      <path d="${walk ? 'M62 247q17 3 30 0' : 'M74 247h29'}" stroke="#4b4845" stroke-width="10" stroke-linecap="round"/>
-      <path d="${walk ? 'M135 244q14 4 27 1' : 'M108 247h29'}" stroke="#4b4845" stroke-width="10" stroke-linecap="round"/>
-      <path d="${walk ? 'M65 244h20' : 'M78 244h18'}" stroke="#fff" stroke-width="2" opacity=".5"/>
-      <path d="${walk ? 'M139 242h16' : 'M112 244h18'}" stroke="#fff" stroke-width="2" opacity=".5"/>
+      ${options.carryBag !== false ? `
+      <g class="fashion-bag">
+        <path d="M78 151c-11 17-13 39-9 61" fill="none" stroke="${ink}" stroke-width="3"/>
+        <rect x="58" y="188" width="31" height="39" rx="3" fill="${ink}"/>
+        <path d="M63 191h21" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+      </g>` : ''}
     </g>
   </svg>`;
 }
 
 function previewOutfit(person) {
-  return { top: 'tee', bottom: person === 'a' ? 'shorts' : 'skirt', outer: 'none', umbrella: false };
+  return {
+    top: 'tee',
+    bottom: person === 'b' ? 'skirt' : 'pants',
+    outer: 'none',
+    umbrella: false
+  };
 }
