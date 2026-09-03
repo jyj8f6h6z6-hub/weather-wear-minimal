@@ -4,5 +4,5 @@
 // 3. 將 API Key 貼到下方引號內
 // 4. 正式上線前請在 Google Cloud 將 Key 限制為你的 GitHub Pages 網址
 window.APP_CONFIG = {
-  GOOGLE_MAPS_API_KEY: ''
+  GOOGLE_MAPS_API_KEY: 'AIzaSyDHJ18rC0CuG4OGUbF-c4H7xavGoKOrTgw'
 };
