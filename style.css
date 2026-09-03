@@ -51,3 +51,102 @@ button,input{font:inherit} button{-webkit-tap-highlight-color:transparent}
   min-height:20px;
   text-align:center;
 }
+
+/* =========================================================
+   v5 — Visual-first redesign
+   人物是主角；天氣與路線退到背景。
+========================================================= */
+:root{
+  --bg:#f4f0e9;
+  --surface:rgba(255,255,255,.70);
+  --text:#25231f;
+  --muted:#8d877e;
+  --line:rgba(47,43,37,.10);
+  --shadow:0 24px 70px rgba(67,57,44,.09);
+}
+.app-shell{
+  background:
+    radial-gradient(circle at 18% 3%,rgba(255,255,255,.98),transparent 31%),
+    radial-gradient(circle at 88% 90%,rgba(255,255,255,.64),transparent 34%),
+    linear-gradient(155deg,#f7f3ed 0%,#f1ece4 100%);
+}
+.back-btn{
+  width:40px;height:40px;background:rgba(255,255,255,.56);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 8px 24px rgba(50,43,34,.045);font-size:19px;
+}
+
+/* 附近：單一人物直接成為畫面中心 */
+#screen-result-nearby .result-head{margin-top:64px;align-items:center}
+#screen-result-nearby .big-weather{font-size:32px;line-height:1}
+#screen-result-nearby .temp-line{font-size:26px;margin-top:4px}
+#screen-result-nearby .result-headline{font-size:clamp(27px,7vw,38px)}
+#screen-result-nearby .weather-halo{width:330px;height:330px;top:47%;opacity:.76}
+#screen-result-nearby .character-stage.solo{min-height:430px;place-items:center}
+#screen-result-nearby .character-stage.solo .character-svg{width:min(88%,300px);filter:drop-shadow(0 18px 18px rgba(54,45,36,.08))}
+#screen-result-nearby .accessory-row{margin-top:-28px;z-index:4}
+
+/* 旅程結果：上方資訊更小，人物更大 */
+.trip-result{padding-left:20px;padding-right:20px;gap:0}
+.trip-meta{
+  margin-top:56px;
+  grid-template-columns:minmax(94px,1fr) minmax(82px,1.25fr) minmax(94px,1fr);
+  gap:12px;align-items:center;z-index:5;
+}
+.trip-point{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"kicker kicker" "icon temp" "place place";align-items:center;justify-content:start;column-gap:7px;row-gap:0}
+.trip-point.align-right{justify-content:end;justify-items:end;grid-template-columns:1fr auto;grid-template-areas:"kicker kicker" "temp icon" "place place"}
+.point-kicker{grid-area:kicker;font-size:11px;letter-spacing:.12em;color:#aaa39a;margin-bottom:4px;font-weight:650}
+.weather-dot{grid-area:icon;font-size:22px;filter:saturate(.88)}
+.trip-point strong{grid-area:temp;font-size:28px;line-height:1;font-weight:790;letter-spacing:-.05em}
+.trip-point small{grid-area:place;font-size:12px;margin-top:7px;max-width:130px;color:var(--muted)}
+.trip-line{height:1px;background:linear-gradient(90deg,transparent,var(--line) 14%,var(--line) 86%,transparent)}
+.trip-line:before{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;background:rgba(37,35,31,.16);transform:translate(-50%,-50%)}
+.trip-line span{right:3px;border-color:rgba(37,35,31,.42)}
+
+.journey-stage{
+  flex:1;min-height:440px;
+  grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);
+  align-items:end;margin:8px -8px 0;
+}
+.journey-zone{overflow:visible;isolation:isolate}
+.journey-zone:after{
+  content:"";position:absolute;bottom:19px;left:50%;width:116px;height:18px;
+  border-radius:50%;background:rgba(64,54,43,.07);filter:blur(3px);transform:translateX(-50%);z-index:0;
+}
+.journey-character{z-index:3;transition:transform .25s ease}
+.journey-character .character-svg{width:min(118%,220px);filter:drop-shadow(0 14px 14px rgba(58,47,37,.06))}
+.current-zone .journey-character{transform:translateX(7px)}
+.destination-zone .journey-character{transform:translateX(-3px)}
+.scene-bubble{
+  width:190px;height:190px;top:55px;opacity:.58;filter:saturate(.72);
+  mask-image:linear-gradient(to bottom,#000 0 72%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 72%,transparent 100%);
+}
+.scene-bubble.sun{background:radial-gradient(circle at 55% 40%,rgba(255,213,101,.86) 0 12%,rgba(255,224,145,.40) 13% 35%,rgba(255,255,255,.10) 36%)}
+.scene-bubble.cloud{background:radial-gradient(circle at 38% 43%,rgba(255,255,255,.95) 0 22%,transparent 23%),radial-gradient(circle at 61% 49%,rgba(203,209,211,.75) 0 27%,transparent 28%),rgba(219,224,226,.22)}
+.scene-bubble.rain{background:repeating-linear-gradient(112deg,transparent 0 16px,rgba(99,142,170,.22) 17px 19px),linear-gradient(rgba(207,220,226,.35),rgba(207,220,226,.08))}
+.scene-bubble.night{background:radial-gradient(circle at 58% 36%,rgba(255,244,183,.95) 0 10%,transparent 11%),radial-gradient(circle,rgba(103,115,146,.26),rgba(103,115,146,.06) 58%,transparent 60%)}
+.movement-cue{z-index:6;align-self:center;transform:translateY(46px);opacity:.62}
+.movement-cue span{width:25px;border-top:1.5px dashed rgba(36,35,33,.22)}
+.movement-cue b{font-size:30px;font-weight:200;line-height:1;margin-top:-16px;transform:translateX(12px)}
+
+/* 結論只做一句；配件才在需要時出現 */
+.trip-headline{font-size:clamp(22px,5.5vw,28px);margin-top:-3px;min-height:30px;z-index:6}
+.carry-row{min-height:34px;margin-top:8px;z-index:6}
+.accessory-pill{padding:7px 11px;background:rgba(255,255,255,.58);backdrop-filter:blur(10px);box-shadow:none;border:1px solid rgba(255,255,255,.65);font-size:12px;color:#625d56}
+#tripEta{font-size:11px;margin-top:13px;letter-spacing:.02em;color:#aaa39a}
+.trip-result .restart-btn{margin-top:7px;margin-bottom:0;font-size:12px;padding:8px 13px;opacity:.72}
+
+/* 桌機仍是手機 App，但比例更精緻，不再過高過空 */
+@media(min-width:700px){
+  body{padding:28px 0}
+  .app-shell{width:520px;min-height:calc(100dvh - 56px);border-radius:36px}
+  .screen{min-height:calc(100dvh - 56px)}
+  .journey-stage{min-height:430px}
+}
+@media(max-height:760px){
+  .journey-stage{min-height:350px}
+  .scene-bubble{width:155px;height:155px;top:38px}
+  .journey-character .character-svg{width:min(108%,190px)}
+  .trip-meta{margin-top:48px}
+}

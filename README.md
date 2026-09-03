@@ -1,46 +1,22 @@
-# 今天怎麼穿？ v4
+# 今天怎麼穿？ v5
 
-這是可直接用 VS Code + GitHub Pages 的完整網站。
+這版重點是「結果頁美化」，功能沿用 v4：定位、附近、Google Places 目的地搜尋、天氣與穿搭判斷。
 
-## v4 這次修正
+## v5 視覺調整
+- 人物放大，成為結果頁主角。
+- 左邊「現在」人物保留往右走的姿態；右邊是抵達後站定。
+- 天氣改成淡化的場景背景，不再像獨立 icon 卡片。
+- 現在／抵達資訊縮小，讓視線先看到人物穿著。
+- 路線與箭頭淡化，保留「從左走到右」的感覺。
+- 配件建議改成小型半透明標籤。
+- ETA、重選都降為次要資訊。
+- 桌機仍維持手機 App 卡片，但比例與留白重新整理。
 
-- 「去哪？」頁面只剩 **一個 Google Places 搜尋框**。
-- 移除舊的白色備援搜尋框、右箭頭與「找不到」流程。
-- 強制 Google 搜尋元件使用淺色模式，避免出現黑色搜尋框。
-- 點 Google 候選地點後，直接查目的地天氣並進入穿搭結果。
-- 若 Google Places 真的載入失敗，只會顯示「Google 地點搜尋未載入」。
+## 更新既有 GitHub 專案
+1. 解壓縮 ZIP。
+2. 用 v5 檔案覆蓋你目前 VS Code 專案中的同名檔案。
+3. **config.js 請保留／重新貼入你自己的 Google Maps API Key。**
+4. Live Server 測試。
+5. VS Code 左側 Source Control → Commit → Sync Changes。
 
-## API Key
-
-請打開 `config.js`，把自己的 Key 放入：
-
-```js
-window.APP_CONFIG = {
-  GOOGLE_MAPS_API_KEY: '你的 API Key'
-};
-```
-
-Google Cloud 需啟用：
-
-- Maps JavaScript API
-- Places API (New)
-
-正式上 GitHub Pages 時，請限制 API Key 的網站來源，例如：
-
-`https://jyj8f6h6z6-hub.github.io/*`
-
-本機 Live Server 若也有限制來源，可另外允許：
-
-`http://127.0.0.1:*/*`
-`http://localhost:*/*`
-
-## VS Code 更新既有 GitHub 專案
-
-如果你已經建立 Repository，**不要重新 Initialize、不要重新 Publish**。
-
-1. 把 v4 ZIP 解壓縮。
-2. 用 v4 檔案覆蓋原專案裡的同名檔案。
-3. `config.js` 再貼回你的 API Key。
-4. Live Server 先測試。
-5. 正常後：Source Control → Commit → Sync Changes。
-6. GitHub Pages 更新後，瀏覽器按 `Ctrl + F5`。
+不要重新 Initialize Repository，也不用重新 Publish Branch。
