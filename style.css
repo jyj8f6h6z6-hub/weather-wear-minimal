@@ -1,14 +1,15 @@
 
 :root{
-  --bg:#ece9e4;
-  --paper:#f7f5f1;
+  --page:#ece9e4;
+  --paper:#f8f6f2;
+  --paper2:#f1eee8;
   --ink:#171717;
-  --muted:#8f8982;
-  --line:rgba(23,23,23,.12);
-  --shadow:0 28px 70px rgba(40,35,30,.12);
+  --muted:#8a857e;
+  --line:rgba(23,23,23,.10);
+  --shadow:0 28px 72px rgba(48,42,35,.12);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
+html,body{margin:0;min-height:100%;background:var(--page);color:var(--ink)}
 body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans TC",sans-serif}
 button,input{font:inherit}
 button{color:inherit}
@@ -16,52 +17,54 @@ button{color:inherit}
   width:min(100%,500px);
   min-height:100dvh;
   margin:0 auto;
-  background:linear-gradient(180deg,#f8f6f2 0%,#f1eee8 100%);
+  background:linear-gradient(180deg,#faf8f5 0%,#f2eee8 100%);
   position:relative;
   overflow:hidden;
 }
-.screen{
-  display:none;
-  min-height:100dvh;
-  padding:28px 20px 24px;
-  position:relative;
-}
+.screen{display:none;min-height:100dvh;padding:24px 20px;position:relative}
 .screen.active{display:flex;flex-direction:column}
-.center-stack{margin:auto 0;width:100%;display:grid;gap:22px;justify-items:center}
-.hero-stack{gap:26px}
-.tiny-title{margin:0;font-size:36px;font-weight:650;letter-spacing:-.06em}
+.center-stack{margin:auto 0;width:100%;display:grid;gap:24px;justify-items:center}
+.hero-stack{gap:30px}
+.tiny-title{margin:0;font-size:38px;font-weight:650;letter-spacing:-.06em}
 .micro-text{margin:0;color:var(--muted);font-size:12px}
 .centered{text-align:center}
 
-/* 人物選擇：直接就是 fashion editorial 照片 */
-.person-picker{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* 人物選擇：只有人，不再把整張 UI 當人物圖 */
+.person-picker{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
 .person-card{
-  border:0;
-  padding:0;
-  background:#ddd8d0;
-  height:430px;
+  position:relative;
+  height:410px;
+  border:1px solid rgba(23,23,23,.06);
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,255,255,.95),rgba(255,255,255,0) 45%),
+    #e8e4de;
   overflow:hidden;
   cursor:pointer;
-  position:relative;
+  padding:0;
 }
+.person-card:nth-child(2){background:
+  radial-gradient(circle at 50% 30%,rgba(255,255,255,.95),rgba(255,255,255,0) 45%),
+  #e5e0da}
 .person-card::after{
   content:"";
   position:absolute;
-  inset:auto 14px 14px;
-  border-bottom:1px solid rgba(255,255,255,.7);
+  left:18px;right:18px;bottom:16px;
+  border-bottom:1px solid rgba(23,23,23,.12);
 }
-.person-preview,.preview-img{width:100%;height:100%}
-.editorial-photo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center center;
-  display:block;
-  user-select:none;
-  -webkit-user-drag:none;
+.person-preview{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center}
+.preview-img{
+  width:120%;
+  height:96%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 18px 22px rgba(40,35,30,.12));
+  transform:translateY(8px);
 }
-.person-card:first-child .preview-img{object-position:52% 42%}
-.person-card:nth-child(2) .preview-img{object-position:48% 40%}
 
 /* 定位 */
 .locate-orb{width:82px;height:82px;border-radius:50%;background:#171717;display:grid;place-items:center;box-shadow:0 18px 45px rgba(0,0,0,.15)}
@@ -75,84 +78,123 @@ button{color:inherit}
 .weather-mini{font-weight:650}
 
 /* 模式 */
-.mode-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mode-btn{border:0;background:#ebe7e0;height:200px;display:grid;place-items:center;align-content:center;gap:18px;cursor:pointer}
+.mode-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode-btn{border:0;background:#ebe7e0;height:190px;display:grid;place-items:center;align-content:center;gap:18px;cursor:pointer}
 .nearby-rings{width:58px;height:58px;border:1.5px solid #171717;border-radius:50%;display:grid;place-items:center}
 .nearby-rings::before{content:"";width:30px;height:30px;border:1.5px solid #171717;border-radius:50%}
 .arrow-mark{font-size:52px;font-weight:200}
-.back-btn{position:absolute;top:20px;left:20px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(248,246,242,.92);z-index:30;cursor:pointer}
+.back-btn{position:absolute;top:20px;left:20px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(248,246,242,.94);z-index:30;cursor:pointer}
 .destination-stack{align-content:center}
 .google-place-host{width:100%;min-height:58px}
 .destination-status{min-height:18px}
 
-/* 附近結果：單張 editorial 卡 */
-.result-screen{background:linear-gradient(180deg,#f8f6f2,#eeeae3)}
-.result-head{margin-top:58px;display:flex;justify-content:space-between;align-items:flex-end}
-.big-weather{font-size:20px}
-.temp-line{font-size:44px;font-weight:550;letter-spacing:-.06em}
-.result-headline{font-size:17px;font-weight:600}
+/* 附近結果 */
+.result-screen{background:linear-gradient(180deg,#faf8f5,#f0ece5)}
+.result-head{margin-top:56px;display:flex;justify-content:space-between;align-items:flex-end}
+.big-weather{font-size:18px}.temp-line{font-size:46px;font-weight:550;letter-spacing:-.06em}
+.result-headline{font-size:16px;font-weight:600}
 .character-stage.solo{
-  margin-top:20px;
-  height:520px;
-  overflow:hidden;
-  background:#ddd8d0;
-  box-shadow:0 18px 50px rgba(0,0,0,.08);
+  position:relative;
+  margin-top:8px;
+  height:560px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
 }
-.character-stage.solo .character-img{object-position:center 42%}
-.accessory-row,.carry-row{display:flex;justify-content:center;gap:7px;min-height:34px;margin-top:12px}
-.accessory-pill{display:inline-flex;align-items:center;border:1px solid var(--line);padding:7px 11px;border-radius:999px;font-size:11px}
+.character-stage.solo::before{
+  content:"";
+  position:absolute;
+  width:82%;height:58%;
+  left:9%;bottom:10%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(213,207,198,.50),rgba(213,207,198,0) 70%);
+}
+.character-stage.solo .character-img{
+  position:relative;
+  z-index:2;
+  width:92%;
+  height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 22px 18px rgba(40,35,30,.14));
+}
+.accessory-row,.carry-row{display:flex;justify-content:center;gap:7px;min-height:34px;margin-top:8px}
+.accessory-pill{display:inline-flex;align-items:center;border:1px solid var(--line);padding:7px 11px;border-radius:999px;font-size:11px;background:rgba(255,255,255,.35)}
 .ghost-btn{border:0;background:transparent;color:var(--muted);padding:10px;cursor:pointer}
 .restart-btn{margin:auto auto 0}
 
-/* 旅程：兩張時尚照片，不再畫卡通人物 */
+/* 旅程結果：一個舞台、兩個人物；不是兩張照片 */
 .trip-meta{
   margin-top:58px;
   display:grid;
-  grid-template-columns:1fr 72px 1fr;
+  grid-template-columns:1fr 68px 1fr;
   gap:10px;
   align-items:end;
 }
 .trip-point{display:grid;grid-template-columns:auto auto;gap:2px 6px;align-items:end}
 .trip-point.align-right{text-align:right;justify-content:end}
 .point-kicker{grid-column:1/-1;font-size:10px;letter-spacing:.15em;color:var(--muted)}
-.weather-dot{font-size:17px}
-.trip-point strong{font-size:28px;letter-spacing:-.05em}
-.trip-point small{grid-column:1/-1;font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:165px}
+.weather-dot{font-size:16px}
+.trip-point strong{font-size:30px;letter-spacing:-.055em}
+.trip-point small{grid-column:1/-1;font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
 .trip-line{height:28px;display:flex;align-items:center}
 .trip-line span{display:block;width:100%;border-top:1px solid var(--line);position:relative}
-.trip-line span::after{content:"";position:absolute;right:0;top:-4px;width:7px;height:7px;border-right:1px solid #666;border-top:1px solid #666;transform:rotate(45deg)}
+.trip-line span::after{content:"";position:absolute;right:0;top:-4px;width:7px;height:7px;border-right:1px solid #777;border-top:1px solid #777;transform:rotate(45deg)}
 
 .journey-stage{
-  margin-top:22px;
-  height:520px;
+  position:relative;
+  height:555px;
+  margin-top:6px;
   display:grid;
   grid-template-columns:1fr 28px 1fr;
-  gap:0;
-  align-items:stretch;
+  align-items:end;
+  overflow:visible;
+}
+.journey-stage::before{
+  content:"";
+  position:absolute;
+  left:2%;right:2%;bottom:8%;
+  height:44%;
+  background:
+    radial-gradient(ellipse at 28% 70%,rgba(185,195,202,.26),rgba(185,195,202,0) 42%),
+    radial-gradient(ellipse at 76% 70%,rgba(217,199,170,.20),rgba(217,199,170,0) 42%);
+  z-index:0;
 }
 .journey-zone{
+  height:100%;
   position:relative;
-  overflow:hidden;
-  background:#ddd8d0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  overflow:visible;
+  background:transparent;
+  z-index:2;
 }
-.journey-character{width:100%;height:100%}
-.journey-character .character-img{width:100%;height:100%;object-fit:cover}
-.current-zone .character-img{object-position:52% 42%}
-.destination-zone .character-img{object-position:48% 42%}
+.journey-character{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center}
+.journey-character .character-img{
+  width:145%;
+  max-width:none;
+  height:98%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 22px 18px rgba(40,35,30,.13));
+}
+.current-zone .character-img{transform:translateX(7%)}
+.destination-zone .character-img{transform:translateX(-7%)}
 .scene-bubble{display:none}
-.movement-cue{display:grid;place-items:center;color:#9f9991}
+.movement-cue{height:100%;display:grid;place-items:center;align-content:center;color:#9d978f;z-index:5}
 .movement-cue span{display:none}
-.movement-cue b{font-weight:300;font-size:24px}
+.movement-cue b{font-size:28px;font-weight:250;transform:translateY(28px)}
+
 .trip-headline{
-  margin:18px 0 0;
+  margin:0;
+  transform:translateY(-3px);
   font-size:23px;
-  font-weight:630;
+  font-weight:650;
   letter-spacing:-.055em;
   text-align:center;
 }
-#tripEta{margin-top:5px;letter-spacing:.08em}
-
-/* 讓照片本身成為視覺，不加卡片堆疊 */
+#tripEta{margin-top:2px;letter-spacing:.08em}
 .weather-halo{display:none}
 
 @media(min-width:700px){
@@ -161,7 +203,7 @@ button{color:inherit}
   .screen{min-height:calc(100dvh - 56px)}
 }
 @media(max-height:820px){
-  .journey-stage{height:430px}
   .person-card{height:350px}
-  .character-stage.solo{height:430px}
+  .journey-stage{height:455px}
+  .character-stage.solo{height:455px}
 }
