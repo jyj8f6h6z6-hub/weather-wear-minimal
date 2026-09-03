@@ -81,15 +81,20 @@ $('tripBtn').addEventListener('click', async () => {
   $('destinationStatus').textContent = '';
   showScreen('screen-destination');
 
-  const mounted = await GooglePlacesSearch.mount($('googlePlaceHost'), {
-    currentLocation: state.current,
-    onSelect: selectDestination
-  }).catch(() => false);
-
-  $('googlePlaceHost').hidden = !mounted;
-  $('fallbackDestinationForm').hidden = mounted;
-  if (!mounted) {
-    $('destinationStatus').textContent = GooglePlacesSearch.hasKey() ? 'Google 搜尋暫時無法載入' : '尚未設定 Google Maps Key';
+  try {
+    await GooglePlacesSearch.mount($('googlePlaceHost'), {
+      currentLocation: state.current,
+      onSelect: selectDestination
+    });
+    $('googlePlaceHost').hidden = false;
+    $('fallbackDestinationForm').hidden = true;
+    $('destinationStatus').textContent = '';
+  } catch (error) {
+    console.error('[Google Places]', error);
+    $('googlePlaceHost').hidden = true;
+    $('fallbackDestinationForm').hidden = false;
+    $('destinationStatus').textContent = 'Google 地點搜尋未載入';
+    $('destinationStatus').title = error?.message || '';
     setTimeout(() => $('destinationInput').focus(), 120);
   }
 });
@@ -189,3 +194,5 @@ document.querySelectorAll('[data-back]').forEach(btn => btn.addEventListener('cl
 document.querySelectorAll('.restart-btn').forEach(btn => btn.addEventListener('click', () => showScreen('screen-mode')));
 const remembered = localStorage.getItem('weatherWearPerson');
 if (remembered === 'a' || remembered === 'b') state.person = remembered;
+
+window.addEventListener('weatherwear:places-error', (e) => { const el = document.getElementById('destinationStatus'); if (el) { el.textContent = '這個地點暫時讀不到'; el.title = e.detail?.message || ''; } });

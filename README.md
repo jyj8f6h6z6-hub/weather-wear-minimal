@@ -1,103 +1,56 @@
-# 今天怎麼穿？ v2
+# 今天怎麼穿？ v3
 
-極簡穿搭天氣網站。先選人物 → 定位 → 附近 / 出門 → 直接看穿搭圖。
+極簡穿搭天氣網站。這版重點修正 Google Maps / Places 目的地搜尋。
 
-## 這版新增
+## v3 主要修正
 
-- Google Maps / Places 目的地搜尋（Autocomplete）
-- 搜尋會優先偏向目前位置附近
-- 沒有 Google API Key 時仍可用備援地名搜尋測試網站
-- 全新 Q 版人物：大頭比例、表情、腮紅、髮型、鞋子、背包
-- 穿搭更清楚：短袖、長袖、薄外套、外套、厚外套、短褲、長褲、裙裝、雨傘
-- 出門模式：左側人物「往右走」；右側人物為抵達狀態
-- 目的地與目前位置有極簡天氣背景提示
+- 使用 Google Maps JavaScript API + Places API (New)
+- 目的地改為 Google `PlaceAutocompleteElement`
+- 輸入時直接顯示 Google 地點候選，不必按右箭頭
+- 優先搜尋台灣，並以目前 GPS 位置作為搜尋偏向
+- 選到地點後直接取得座標並進入目的地天氣／穿搭結果
+- 加強 GitHub Pages 首次載入時的等待與錯誤處理
+- Google API 若載入失敗，不再把問題顯示成「找不到地點」
 
----
+## 你的 API Key
 
-## 第一次在 VS Code 開啟
-
-1. 解壓縮資料夾。
-2. VS Code → `File` → `Open Folder` → 選本資料夾。
-3. 安裝 / 使用 Live Server。
-4. 右鍵 `index.html` → `Open with Live Server`。
-
-> 定位功能請用 localhost 或 GitHub Pages HTTPS，不要直接雙擊 index.html。
-
----
-
-## Google Maps 搜尋：你只需要設定一次
-
-### A. Google Cloud
-
-1. 到 Google Cloud Console 建立一個 Project。
-2. 建立 Billing account / 將專案連結計費。
-3. 啟用：
-   - `Maps JavaScript API`
-   - `Places API (New)`
-4. 建立 API Key。
-
-### B. 把 Key 貼進網站
-
-打開 `config.js`：
+請打開 `config.js`：
 
 ```js
 window.APP_CONFIG = {
-  GOOGLE_MAPS_API_KEY: '把你的 API Key 貼在這裡'
+  GOOGLE_MAPS_API_KEY: '你的 API Key'
 };
 ```
 
-存檔後重新整理網頁。
+如果你從 v2 整包覆蓋，記得把你原本的 Key 再貼回 `config.js`。
 
-### C. 正式上 GitHub 前一定要做 Key 限制
+Google Cloud 請確認：
 
-Google Cloud → Credentials → 你的 API Key：
+1. Billing 已啟用
+2. Maps JavaScript API 已啟用
+3. Places API (New) 已啟用
+4. API Key 的 Website restrictions 有包含你的 GitHub Pages 網址
+5. API restrictions 允許 Maps JavaScript API 與 Places API (New)
 
-- Application restrictions：`Websites (HTTP referrers)`
-- 加入你的 GitHub Pages 網址，例如：
-  `https://你的帳號.github.io/weather-wear-minimal/*`
-- 本機測試可另外加入：
-  `http://localhost/*`
-  `http://127.0.0.1/*`
-- API restrictions：只允許 `Maps JavaScript API`、`Places API (New)`
+網站限制可使用：
 
-前端網站的 API Key 本來就會被瀏覽器看到，所以重點不是藏起來，而是「限制它只能在你的網站使用」。
+`https://jyj8f6h6z6-hub.github.io/*`
 
----
+## VS Code 更新到原本 GitHub
 
-## 第一次建立新的 GitHub 專案
+這不是新 Repository。把 v3 檔案覆蓋原本專案後：
 
-VS Code 左側 Source Control：
+1. VS Code 左側 Source Control
+2. 確認變更檔案
+3. Commit（例如：`fix google places search v3`）
+4. Sync Changes
+5. 等 GitHub Pages 約 1～3 分鐘
+6. 網頁按 `Ctrl + F5` 強制重新整理
 
-1. `Initialize Repository`
-2. Stage / Commit（例如：`first version`）
-3. `Publish Branch`
-4. GitHub repository 建議命名：`weather-wear-minimal`
+### 最重要
 
-接著 GitHub：
+不要再次 Initialize Repository，也不要再次 Publish Branch。
 
-`Settings` → `Pages` → `Deploy from a branch` → `main` → `/(root)`
+## 若仍看到「Google 地點搜尋未載入」
 
----
-
-# 以後更新 GitHub，只記這句
-
-## 改完 → Commit → Sync Changes
-
-VS Code 左側 Source Control：
-
-1. 看修改檔案。
-2. Message 寫一句，例如 `update character design`。
-3. `Commit`。
-4. `Sync Changes`。
-
-不用重新 Initialize、不用重新 Publish、不用重新設定 GitHub Pages。
-
----
-
-## 目前資料來源
-
-- 天氣：Open-Meteo
-- 目的地搜尋：Google Maps Platform / Places（有設定 API Key 時）
-- 備援搜尋：Open-Meteo Geocoding
-
-目前「抵達時間」仍是依直線距離估算，還不是 Google 導航時間。若之後要做到真正汽車 / 大眾運輸抵達時間，可以再接 Routes API。
+代表不是「搜尋不到台北市文山區」，而是 Google API 本身沒有成功載入。此時按 F12 → Console，通常可以直接看到 Google 回傳的原因，例如 API 未啟用、Billing、Referer 限制或 API restriction。
