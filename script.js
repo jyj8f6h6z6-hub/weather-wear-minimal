@@ -10,7 +10,7 @@ const rounded = n => Math.round(Number(n));
 
 document.querySelectorAll('.person-preview').forEach(el => {
   const person = el.dataset.preview;
-  el.innerHTML = characterSVG(person, previewOutfit(person), 'stand', { carryBag: false });
+  el.innerHTML = CharacterAssets.preview(person);
 });
 
 document.querySelectorAll('.person-card').forEach(btn => {
@@ -70,7 +70,7 @@ $('nearbyBtn').addEventListener('click', () => {
   $('nearbyWeatherIcon').textContent = OutfitEngine.weatherIcon(c.weather_code, c.is_day);
   $('nearbyTemp').textContent = `${rounded(c.temperature_2m)}°`;
   $('nearbyHeadline').textContent = outfit.headline;
-  $('nearbyCharacter').innerHTML = characterSVG(state.person, outfit, 'stand', { carryBag: false });
+  $('nearbyCharacter').innerHTML = CharacterAssets.img(state.person, cond, 'stand', 'solo-character');
   $('nearbyAccessories').innerHTML = cond.rain ? `<span class="accessory-pill">☂️</span>` : '';
   $('nearbyCharacter').dataset.weather = cond.rain ? 'rain' : cond.warmth;
   showScreen('screen-result-nearby');
@@ -152,8 +152,8 @@ function renderTrip() {
   $('tripDestTemp').textContent = `${rounded(destHour.temperature_2m)}°`;
   $('tripDestPlace').textContent = state.destination.place;
 
-  $('tripCurrentCharacter').innerHTML = characterSVG(state.person, nowOutfit, 'walk', { carryBag: true, facing: 'right' });
-  $('tripDestCharacter').innerHTML = characterSVG(state.person, destOutfit, 'stand', { carryBag: false, facing: 'right' });
+  $('tripCurrentCharacter').innerHTML = CharacterAssets.img(state.person, nowCond, 'walk', 'walking-character');
+  $('tripDestCharacter').innerHTML = CharacterAssets.img(state.person, destCond, 'stand', 'arrival-character');
   $('tripCurrentScene').className = `scene-bubble ${sceneClass(nowCond, now.is_day)}`;
   $('tripDestScene').className = `scene-bubble ${sceneClass(destCond, destHour.is_day)}`;
 

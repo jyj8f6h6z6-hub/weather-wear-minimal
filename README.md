@@ -1,32 +1,35 @@
-# 今天怎麼穿 v6 — Fashion Editorial UI
+# 今天怎麼穿 v8 — 真實人物影像版
 
-# 今天怎麼穿？ v5
+這版開始**完全不使用 SVG 人物**。人物改為重新生成的 raster fashion editorial 圖片（WebP），
+網站只負責依「人物選擇 / 晴雨 / 走路或抵達」切換圖片。
 
-這版重點是「結果頁美化」，功能沿用 v4：定位、附近、Google Places 目的地搜尋、天氣與穿搭判斷。
+## v8 這次真正改掉的地方
 
-## v5 視覺調整
-- 人物放大，成為結果頁主角。
-- 左邊「現在」人物保留往右走的姿態；右邊是抵達後站定。
-- 天氣改成淡化的場景背景，不再像獨立 icon 卡片。
-- 現在／抵達資訊縮小，讓視線先看到人物穿著。
-- 路線與箭頭淡化，保留「從左走到右」的感覺。
-- 配件建議改成小型半透明標籤。
-- ETA、重選都降為次要資訊。
-- 桌機仍維持手機 App 卡片，但比例與留白重新整理。
+- 舊的 Q 版 / 卡通人物不再使用。
+- `assets/characters-v8/` 內是新的時尚人物影像。
+- 人物選擇首頁直接用 editorial 照片。
+- 旅程結果改成左右兩張 fashion image：左邊出發、右邊抵達。
+- 雨天人物有真正雨傘、衣物、包袋與走路動態，不是程式拼裝。
+- 版面拿掉大圓形、斜線雨幕、幼兒卡片感。
 
-## 更新既有 GitHub 專案
-1. 解壓縮 ZIP。
-2. 用 v5 檔案覆蓋你目前 VS Code 專案中的同名檔案。
-3. **config.js 請保留／重新貼入你自己的 Google Maps API Key。**
-4. Live Server 測試。
-5. VS Code 左側 Source Control → Commit → Sync Changes。
+## 目前人物素材
 
-不要重新 Initialize Repository，也不用重新 Publish Branch。
+v8 先把畫風確立為：
+- A：City Boy / Clean casual
+- B：日韓 casual chic / IG fashion
+- `dry`：一般晴 / 無雨
+- `rain`：雨天
+- `walk`：出發 / 行走
+- `stand`：抵達 / 站定
 
+後續若要再細分 30°C、20°C、10°C 的服裝，只要新增相同結構的圖檔，不需要重寫網站核心。
 
-## v6 視覺更新
-- 人物改為較修長的時尚插畫比例，不再使用大頭 Q 版。
-- 服裝配色改為黑、米白、卡其、橄欖、丹寧等低飽和色。
-- 雨傘改為黑色都會長傘；包款改為簡潔 tote / shoulder bag 視覺。
-- 結果頁改為 IG fashion editorial 版面，移除大圓圈兒童感背景。
-- 晴雨改用環境光、雨幕等低存在感場景表現。
+## 更新到 GitHub
+
+1. 解壓縮。
+2. 用這版檔案覆蓋既有專案。
+3. 把你自己的 API Key 放回 `config.js`。
+4. Live Server 先測試。
+5. VS Code → Source Control → Commit → Sync Changes。
+
+不要重新 Initialize Repository，也不用重新設定 GitHub Pages。

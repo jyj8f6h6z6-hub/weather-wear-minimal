@@ -1,95 +1,167 @@
 
 :root{
-  --paper:#F1EFEA; --card:#F8F7F3; --ink:#191919; --soft:#85817A;
-  --hairline:rgba(25,25,25,.10); --glass:rgba(248,247,243,.82);
-  --shadow:0 30px 80px rgba(40,34,27,.10);
-  --safe-top:max(18px,env(safe-area-inset-top));
-  --safe-bottom:max(20px,env(safe-area-inset-bottom));
+  --bg:#ece9e4;
+  --paper:#f7f5f1;
+  --ink:#171717;
+  --muted:#8f8982;
+  --line:rgba(23,23,23,.12);
+  --shadow:0 28px 70px rgba(40,35,30,.12);
 }
-*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink)}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans TC",sans-serif;overflow-x:hidden}
-button,input{font:inherit;color:inherit} button{-webkit-tap-highlight-color:transparent}
-.app-shell{width:min(100%,520px);min-height:100dvh;margin:0 auto;position:relative;background:linear-gradient(180deg,#F8F7F3 0%,#F2F0EB 100%);overflow:hidden}
-.screen{display:none;min-height:100dvh;padding:calc(var(--safe-top) + 18px) 22px calc(var(--safe-bottom) + 18px);position:relative}
-.screen.active{display:flex;flex-direction:column;animation:fade .32s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.center-stack{margin:auto 0;display:grid;justify-items:center;gap:24px;width:100%}
-.hero-stack{gap:34px}.tiny-title{margin:0;font-size:clamp(30px,8vw,44px);font-weight:650;letter-spacing:-.055em}
-.micro-text{margin:0;color:var(--soft);font-size:12px;letter-spacing:.02em}.centered{text-align:center}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans TC",sans-serif}
+button,input{font:inherit}
+button{color:inherit}
+.app-shell{
+  width:min(100%,500px);
+  min-height:100dvh;
+  margin:0 auto;
+  background:linear-gradient(180deg,#f8f6f2 0%,#f1eee8 100%);
+  position:relative;
+  overflow:hidden;
+}
+.screen{
+  display:none;
+  min-height:100dvh;
+  padding:28px 20px 24px;
+  position:relative;
+}
+.screen.active{display:flex;flex-direction:column}
+.center-stack{margin:auto 0;width:100%;display:grid;gap:22px;justify-items:center}
+.hero-stack{gap:26px}
+.tiny-title{margin:0;font-size:36px;font-weight:650;letter-spacing:-.06em}
+.micro-text{margin:0;color:var(--muted);font-size:12px}
+.centered{text-align:center}
 
-/* 人物選擇：像 fashion editorial cover，而不是兒童卡片 */
+/* 人物選擇：直接就是 fashion editorial 照片 */
 .person-picker{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.person-card{border:0;background:#EEEAE3;border-radius:4px;min-height:350px;padding:0;cursor:pointer;transition:.22s transform,.22s filter;overflow:hidden;position:relative}
-.person-card:nth-child(2){background:#E8E4DE}.person-card:active{transform:scale(.985);filter:brightness(.98)}
-.person-card:after{content:"";position:absolute;left:16px;right:16px;bottom:14px;border-bottom:1px solid rgba(25,25,25,.15)}
-.person-preview{height:350px;display:grid;place-items:end center}.person-preview .character-svg{width:205px;transform:translateY(14px)}
+.person-card{
+  border:0;
+  padding:0;
+  background:#ddd8d0;
+  height:430px;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+}
+.person-card::after{
+  content:"";
+  position:absolute;
+  inset:auto 14px 14px;
+  border-bottom:1px solid rgba(255,255,255,.7);
+}
+.person-preview,.preview-img{width:100%;height:100%}
+.editorial-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.person-card:first-child .preview-img{object-position:52% 42%}
+.person-card:nth-child(2) .preview-img{object-position:48% 40%}
 
-.locate-orb{width:84px;height:84px;border-radius:50%;background:var(--ink);box-shadow:0 20px 45px rgba(0,0,0,.14);display:grid;place-items:center}
-.locate-orb span{width:18px;height:18px;border:5px solid white;border-radius:50%;position:relative}
-.locate-orb span:before,.locate-orb span:after{content:"";position:absolute;background:white}.locate-orb span:before{width:2px;height:42px;top:-17px;left:3px}.locate-orb span:after{height:2px;width:42px;left:-17px;top:3px}
-.primary-btn,.mode-btn,.go-btn,.ghost-btn{border:0;cursor:pointer}
-.primary-btn{min-width:170px;padding:15px 26px;border-radius:2px;background:var(--ink);color:white;font-weight:600;font-size:15px;letter-spacing:.03em}
-.top-summary{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.place-name{font-size:13px;font-weight:550;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}.weather-mini{font-size:18px;font-weight:650}
+/* 定位 */
+.locate-orb{width:82px;height:82px;border-radius:50%;background:#171717;display:grid;place-items:center;box-shadow:0 18px 45px rgba(0,0,0,.15)}
+.locate-orb span{width:18px;height:18px;border:5px solid #fff;border-radius:50%;position:relative}
+.locate-orb span::before,.locate-orb span::after{content:"";position:absolute;background:#fff}
+.locate-orb span::before{width:2px;height:42px;left:3px;top:-17px}
+.locate-orb span::after{height:2px;width:42px;left:-17px;top:3px}
+.primary-btn{border:0;background:#171717;color:#fff;padding:15px 28px;min-width:170px;font-weight:600;cursor:pointer}
+.top-summary{display:flex;justify-content:space-between;align-items:center}
+.place-name{font-size:12px;color:var(--muted);max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.weather-mini{font-weight:650}
+
+/* 模式 */
 .mode-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mode-btn{background:#ECE9E3;border-radius:4px;min-height:190px;display:grid;place-items:center;align-content:center;gap:16px;font-size:15px;font-weight:600}
-.arrow-mark{font-size:48px;font-weight:200;line-height:1}
-.nearby-rings{width:54px;height:54px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center}.nearby-rings:before{content:"";width:31px;height:31px;border:1.5px solid var(--ink);border-radius:50%}.nearby-rings i{position:absolute;width:6px;height:6px;background:var(--ink);border-radius:50%}
-.back-btn{position:absolute;top:calc(var(--safe-top) + 8px);left:20px;width:38px;height:38px;border:1px solid var(--hairline);border-radius:50%;background:rgba(248,247,243,.82);font-size:18px;cursor:pointer;z-index:10}
-.destination-stack{align-content:center;gap:18px}.google-place-host{width:100%;min-height:58px}.destination-status{min-height:20px;color:var(--soft);font-size:12px}
+.mode-btn{border:0;background:#ebe7e0;height:200px;display:grid;place-items:center;align-content:center;gap:18px;cursor:pointer}
+.nearby-rings{width:58px;height:58px;border:1.5px solid #171717;border-radius:50%;display:grid;place-items:center}
+.nearby-rings::before{content:"";width:30px;height:30px;border:1.5px solid #171717;border-radius:50%}
+.arrow-mark{font-size:52px;font-weight:200}
+.back-btn{position:absolute;top:20px;left:20px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(248,246,242,.92);z-index:30;cursor:pointer}
+.destination-stack{align-content:center}
+.google-place-host{width:100%;min-height:58px}
+.destination-status{min-height:18px}
 
-/* 單地點結果 */
-.nearby-result{justify-content:center;align-items:center;text-align:center;gap:12px}
-.weather-big{font-size:18px;color:var(--soft)}.temp-big{font-size:54px;font-weight:550;letter-spacing:-.06em}
-.nearby-character{width:min(82vw,320px);height:390px;display:grid;place-items:end center}
-.nearby-character .character-svg{width:280px}.headline{margin:0;font-size:24px;font-weight:600;letter-spacing:-.045em}
-.accessory-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--hairline);border-radius:999px;background:transparent;font-size:11px;color:#625D56}
-.restart-btn{border:0;background:transparent;color:var(--soft);padding:10px;font-size:12px;cursor:pointer}
+/* 附近結果：單張 editorial 卡 */
+.result-screen{background:linear-gradient(180deg,#f8f6f2,#eeeae3)}
+.result-head{margin-top:58px;display:flex;justify-content:space-between;align-items:flex-end}
+.big-weather{font-size:20px}
+.temp-line{font-size:44px;font-weight:550;letter-spacing:-.06em}
+.result-headline{font-size:17px;font-weight:600}
+.character-stage.solo{
+  margin-top:20px;
+  height:520px;
+  overflow:hidden;
+  background:#ddd8d0;
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+}
+.character-stage.solo .character-img{object-position:center 42%}
+.accessory-row,.carry-row{display:flex;justify-content:center;gap:7px;min-height:34px;margin-top:12px}
+.accessory-pill{display:inline-flex;align-items:center;border:1px solid var(--line);padding:7px 11px;border-radius:999px;font-size:11px}
+.ghost-btn{border:0;background:transparent;color:var(--muted);padding:10px;cursor:pointer}
+.restart-btn{margin:auto auto 0}
 
-/* ===== 旅程結果：IG editorial layout ===== */
-.trip-result{padding-left:20px;padding-right:20px;background:linear-gradient(180deg,#F7F5F0 0%,#EEEAE3 100%)}
-.trip-meta{display:grid;grid-template-columns:1fr 58px 1fr;align-items:end;gap:8px;margin-top:64px;position:relative;z-index:8}
-.trip-side{min-width:0}.trip-side.right{text-align:right}.trip-kicker{font-size:10px;letter-spacing:.18em;color:#969087;margin-bottom:7px}
-.trip-weather-line{display:flex;align-items:baseline;gap:7px}.trip-side.right .trip-weather-line{justify-content:flex-end}
-.trip-icon{font-size:17px;filter:grayscale(.15)}.trip-temp{font-size:32px;font-weight:520;letter-spacing:-.06em}
-.trip-place{margin-top:4px;font-size:11px;color:#817C74;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.route-line{height:22px;position:relative;align-self:center;margin-bottom:9px}
-.route-line:before{content:"";position:absolute;left:0;right:0;top:10px;border-top:1px solid rgba(25,25,25,.22)}
-.route-line:after{content:"";position:absolute;right:0;top:6px;width:7px;height:7px;border-top:1px solid rgba(25,25,25,.5);border-right:1px solid rgba(25,25,25,.5);transform:rotate(45deg)}
-.route-dot{position:absolute;left:50%;top:8px;width:5px;height:5px;border-radius:50%;background:#A9A39A;transform:translateX(-50%)}
+/* 旅程：兩張時尚照片，不再畫卡通人物 */
+.trip-meta{
+  margin-top:58px;
+  display:grid;
+  grid-template-columns:1fr 72px 1fr;
+  gap:10px;
+  align-items:end;
+}
+.trip-point{display:grid;grid-template-columns:auto auto;gap:2px 6px;align-items:end}
+.trip-point.align-right{text-align:right;justify-content:end}
+.point-kicker{grid-column:1/-1;font-size:10px;letter-spacing:.15em;color:var(--muted)}
+.weather-dot{font-size:17px}
+.trip-point strong{font-size:28px;letter-spacing:-.05em}
+.trip-point small{grid-column:1/-1;font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:165px}
+.trip-line{height:28px;display:flex;align-items:center}
+.trip-line span{display:block;width:100%;border-top:1px solid var(--line);position:relative}
+.trip-line span::after{content:"";position:absolute;right:0;top:-4px;width:7px;height:7px;border-right:1px solid #666;border-top:1px solid #666;transform:rotate(45deg)}
 
-.journey-stage{position:relative;display:grid;grid-template-columns:1fr 34px 1fr;align-items:end;min-height:485px;margin-top:8px;isolation:isolate}
-.journey-person{height:430px;position:relative;display:flex;align-items:flex-end;justify-content:center;z-index:4}
-.journey-character{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;z-index:4}
-.journey-character .character-svg{width:min(128%,260px);height:auto;overflow:visible}
-.journey-person.current .character-svg{transform:translateX(4px)}
-.journey-person.destination .character-svg{transform:translateX(-3px)}
+.journey-stage{
+  margin-top:22px;
+  height:520px;
+  display:grid;
+  grid-template-columns:1fr 28px 1fr;
+  gap:0;
+  align-items:stretch;
+}
+.journey-zone{
+  position:relative;
+  overflow:hidden;
+  background:#ddd8d0;
+}
+.journey-character{width:100%;height:100%}
+.journey-character .character-img{width:100%;height:100%;object-fit:cover}
+.current-zone .character-img{object-position:52% 42%}
+.destination-zone .character-img{object-position:48% 42%}
+.scene-bubble{display:none}
+.movement-cue{display:grid;place-items:center;color:#9f9991}
+.movement-cue span{display:none}
+.movement-cue b{font-weight:300;font-size:24px}
+.trip-headline{
+  margin:18px 0 0;
+  font-size:23px;
+  font-weight:630;
+  letter-spacing:-.055em;
+  text-align:center;
+}
+#tripEta{margin-top:5px;letter-spacing:.08em}
 
-/* 天氣不再是幼兒園圓形背景，而是攝影棚式環境光 */
-.scene-bubble{position:absolute;inset:24px -5px 25px;z-index:-1;border-radius:3px;overflow:hidden;background:transparent}
-.scene-bubble.sun{background:linear-gradient(145deg,rgba(242,210,143,.30),rgba(255,255,255,0) 55%)}
-.scene-bubble.sun:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;top:12px;right:-34px;background:rgba(238,193,94,.16);filter:blur(1px)}
-.scene-bubble.cloud{background:linear-gradient(145deg,rgba(176,183,184,.18),rgba(255,255,255,0) 62%)}
-.scene-bubble.rain{background:linear-gradient(160deg,rgba(111,127,139,.18),rgba(255,255,255,0) 58%)}
-.scene-bubble.rain:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 17px,rgba(80,101,114,.12) 18px 19px,transparent 20px 34px);opacity:.65}
-.scene-bubble.night{background:linear-gradient(145deg,rgba(63,67,75,.18),rgba(255,255,255,0) 65%)}
-.movement-cue{align-self:center;transform:translateY(-44px);opacity:.48;z-index:7}.movement-cue span{display:block;width:24px;border-top:1px solid rgba(25,25,25,.35)}.movement-cue b{display:block;font-size:18px;font-weight:300;transform:translate(18px,-12px)}
-.trip-headline{font-size:22px;font-weight:580;letter-spacing:-.045em;text-align:center;margin:0;min-height:28px}
-.carry-row{min-height:30px;display:flex;justify-content:center;gap:6px;margin-top:8px}
-#tripEta{text-align:center;font-size:10px;letter-spacing:.08em;color:#99928A;margin-top:12px}
-.trip-result .restart-btn{margin:4px auto 0;display:block}
-
-/* SVG editorial styling */
-.editorial-character{overflow:visible}.editorial-character *{vector-effect:non-scaling-stroke}
-.fashion-umbrella{filter:drop-shadow(0 8px 9px rgba(0,0,0,.06))}
-.fashion-bag{filter:drop-shadow(0 5px 5px rgba(0,0,0,.06))}
+/* 讓照片本身成為視覺，不加卡片堆疊 */
+.weather-halo{display:none}
 
 @media(min-width:700px){
-  body{padding:24px 0}
-  .app-shell{width:500px;min-height:calc(100dvh - 48px);border-radius:22px;box-shadow:var(--shadow)}
-  .screen{min-height:calc(100dvh - 48px)}
+  body{padding:28px 0}
+  .app-shell{min-height:calc(100dvh - 56px);border-radius:22px;box-shadow:var(--shadow)}
+  .screen{min-height:calc(100dvh - 56px)}
 }
-@media(max-height:780px){
-  .trip-meta{margin-top:48px}.journey-stage{min-height:405px}.journey-person{height:365px}
-  .journey-character .character-svg{width:min(118%,225px)}
+@media(max-height:820px){
+  .journey-stage{height:430px}
+  .person-card{height:350px}
+  .character-stage.solo{height:430px}
 }
