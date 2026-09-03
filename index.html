@@ -42,13 +42,8 @@
       <button class="back-btn" data-back="screen-mode" aria-label="返回">←</button>
       <div class="center-stack destination-stack">
         <p id="destination-title" class="tiny-title">去哪？</p>
-        <div id="googlePlaceHost" class="google-place-host"></div>
-        <form id="fallbackDestinationForm" class="destination-form fallback-form" hidden>
-          <input id="destinationInput" autocomplete="off" inputmode="search" placeholder="搜尋地點" aria-label="目的地" />
-          <button class="go-btn" type="submit" aria-label="查詢目的地">→</button>
-        </form>
-        <div id="destinationResults" class="destination-results" aria-live="polite"></div>
-        <p id="destinationStatus" class="micro-text"></p>
+        <div id="googlePlaceHost" class="google-place-host" aria-label="Google 地點搜尋"></div>
+        <p id="destinationStatus" class="micro-text destination-status" aria-live="polite"></p>
       </div>
     </section>
 

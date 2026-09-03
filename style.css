@@ -20,3 +20,34 @@ button,input{font:inherit} button{-webkit-tap-highlight-color:transparent}
 .trip-result{padding-left:16px;padding-right:16px}.trip-meta{margin-top:66px;display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:9px;position:relative;z-index:3}.trip-point{display:grid;gap:1px}.trip-point.align-right{text-align:right;justify-items:end}.weather-dot{font-size:27px}.trip-point strong{font-size:26px}.trip-point small{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:96px}.trip-line{height:1px;background:var(--line);position:relative}.trip-line span{position:absolute;right:-1px;top:-4px;width:8px;height:8px;border-top:1px solid var(--text);border-right:1px solid var(--text);transform:rotate(45deg)}
 .journey-stage{flex:1;min-height:365px;display:grid;grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);align-items:end;gap:0;position:relative}.journey-zone{height:100%;display:grid;place-items:end center;position:relative;min-width:0}.journey-character{position:relative;z-index:2;width:100%;display:grid;place-items:end center}.journey-character .character-svg{width:min(100%,180px)}.scene-bubble{position:absolute;width:148px;height:148px;border-radius:50%;top:48px;left:50%;transform:translateX(-50%);opacity:.72}.scene-bubble.sun{background:radial-gradient(circle at 58% 40%,#ffe69d 0 18%,rgba(255,228,151,.48) 19% 41%,rgba(255,255,255,.25) 42%)}.scene-bubble.cloud{background:radial-gradient(circle at 38% 45%,#fff 0 23%,transparent 24%),radial-gradient(circle at 60% 49%,#e4e7e8 0 28%,transparent 29%),rgba(219,224,226,.35)}.scene-bubble.rain{background:repeating-linear-gradient(115deg,transparent 0 13px,rgba(113,151,176,.23) 14px 16px),rgba(205,218,225,.36)}.scene-bubble.night{background:radial-gradient(circle at 58% 38%,#fff8cd 0 12%,transparent 13%),rgba(101,112,139,.18)}.movement-cue{align-self:center;display:grid;place-items:center;color:var(--muted);transform:translateY(20px)}.movement-cue span{display:block;width:30px;border-top:2px dotted rgba(36,35,33,.25)}.movement-cue b{font-size:24px;font-weight:350;margin-top:-12px;transform:translateX(9px)}.trip-headline{text-align:center;font-weight:820;font-size:clamp(22px,5.7vw,30px);letter-spacing:-.045em;line-height:1.08;min-height:32px}.character-svg{height:auto;overflow:visible}
 @media(min-width:700px){body{padding:24px 0}.app-shell{min-height:calc(100dvh - 48px);border-radius:34px;overflow:hidden;box-shadow:0 30px 100px rgba(30,25,20,.12)}.screen{min-height:calc(100dvh - 48px)}}
+
+/* v4：目的地頁只保留 Google Places 一個搜尋框 */
+[hidden]{display:none!important}
+.google-place-host{
+  width:100%;
+  min-height:58px;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:var(--shadow);
+  overflow:visible;
+  color-scheme:light;
+}
+.google-place-host gmp-place-autocomplete{
+  display:block;
+  width:100%;
+  min-height:58px;
+  border:0;
+  border-radius:22px;
+  background:#fff;
+  color-scheme:light;
+  box-shadow:none;
+  --gmpx-color-surface:#fff;
+  --gmpx-color-on-surface:#242321;
+  --gmpx-color-on-surface-variant:#86817a;
+  --gmpx-font-family-base:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans TC",sans-serif;
+  --gmpx-font-size-base:17px;
+}
+.destination-status{
+  min-height:20px;
+  text-align:center;
+}

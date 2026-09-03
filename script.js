@@ -77,46 +77,22 @@ $('nearbyBtn').addEventListener('click', () => {
 });
 
 $('tripBtn').addEventListener('click', async () => {
-  $('destinationResults').innerHTML = '';
   $('destinationStatus').textContent = '';
   showScreen('screen-destination');
 
   try {
+    $('googlePlaceHost').hidden = false;
     await GooglePlacesSearch.mount($('googlePlaceHost'), {
       currentLocation: state.current,
       onSelect: selectDestination
     });
-    $('googlePlaceHost').hidden = false;
-    $('fallbackDestinationForm').hidden = true;
     $('destinationStatus').textContent = '';
   } catch (error) {
     console.error('[Google Places]', error);
     $('googlePlaceHost').hidden = true;
-    $('fallbackDestinationForm').hidden = false;
     $('destinationStatus').textContent = 'Google 地點搜尋未載入';
     $('destinationStatus').title = error?.message || '';
-    setTimeout(() => $('destinationInput').focus(), 120);
   }
-});
-
-async function searchFallback(query) {
-  const qs = new URLSearchParams({ name: query, count: '5', language: 'zh', format: 'json' });
-  const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?${qs}`);
-  if (!res.ok) throw new Error();
-  return (await res.json()).results || [];
-}
-
-$('fallbackDestinationForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const q = $('destinationInput').value.trim();
-  if (!q) return;
-  $('destinationStatus').textContent = '搜尋中…';
-  try {
-    const results = await searchFallback(q);
-    $('destinationStatus').textContent = results.length ? '' : '找不到';
-    $('destinationResults').innerHTML = results.map((r, i) => `<button type="button" class="destination-result" data-index="${i}"><strong>${r.name}</strong><small>${[r.admin2,r.admin1,r.country].filter(Boolean).join('・')}</small></button>`).join('');
-    document.querySelectorAll('.destination-result').forEach(btn => btn.addEventListener('click', () => selectDestination(results[Number(btn.dataset.index)])));
-  } catch { $('destinationStatus').textContent = '暫時無法搜尋'; }
 });
 
 function haversineKm(a, b) {

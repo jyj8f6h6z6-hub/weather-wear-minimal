@@ -88,6 +88,9 @@ const GooglePlacesSearch = (() => {
       });
       element.placeholder = '搜尋地點';
       element.setAttribute('aria-label', '搜尋目的地');
+      // 強制使用淺色模式，避免瀏覽器/系統深色偏好讓 Google 搜尋框變黑。
+      element.style.colorScheme = 'light';
+      element.style.width = '100%';
 
       element.addEventListener('gmp-select', async (event) => {
         try {
@@ -111,6 +114,7 @@ const GooglePlacesSearch = (() => {
     }
 
     setBias(currentLocation);
+    // 每次進入頁面只保留一個 Google 搜尋元件。
     container.replaceChildren(element);
     return true;
   }
