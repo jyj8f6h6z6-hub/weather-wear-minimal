@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f1eb" />
+  <title>今天怎麼穿？</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section id="screen-person" class="screen active" aria-labelledby="person-title">
+      <div class="center-stack hero-stack">
+        <p id="person-title" class="tiny-title">我是</p>
+        <div class="person-picker" role="group" aria-label="選擇人物樣式">
+          <button class="person-card" data-person="a" aria-label="選擇左側人物"><div class="person-preview" data-preview="a"></div></button>
+          <button class="person-card" data-person="b" aria-label="選擇右側人物"><div class="person-preview" data-preview="b"></div></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-location" class="screen" aria-labelledby="location-title">
+      <div class="center-stack">
+        <div id="location-title" class="locate-orb" aria-hidden="true"><span></span></div>
+        <button id="locateBtn" class="primary-btn">定位</button>
+        <p id="locationStatus" class="micro-text">允許使用目前位置</p>
+      </div>
+    </section>
+
+    <section id="screen-mode" class="screen" aria-labelledby="mode-title">
+      <header class="top-summary"><span id="currentPlace" class="place-name">目前位置</span><span id="currentWeatherMini" class="weather-mini">--°</span></header>
+      <div class="center-stack">
+        <p id="mode-title" class="tiny-title">去哪？</p>
+        <div class="mode-grid">
+          <button id="nearbyBtn" class="mode-btn" aria-label="就在附近"><span class="nearby-rings" aria-hidden="true"><i></i></span><span>附近</span></button>
+          <button id="tripBtn" class="mode-btn" aria-label="前往其他地點"><span class="arrow-mark" aria-hidden="true">→</span><span>出門</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-destination" class="screen" aria-labelledby="destination-title">
+      <button class="back-btn" data-back="screen-mode" aria-label="返回">←</button>
+      <div class="center-stack destination-stack">
+        <p id="destination-title" class="tiny-title">去哪？</p>
+        <div id="googlePlaceHost" class="google-place-host"></div>
+        <form id="fallbackDestinationForm" class="destination-form fallback-form" hidden>
+          <input id="destinationInput" autocomplete="off" inputmode="search" placeholder="搜尋地點" aria-label="目的地" />
+          <button class="go-btn" type="submit" aria-label="查詢目的地">→</button>
+        </form>
+        <div id="destinationResults" class="destination-results" aria-live="polite"></div>
+        <p id="destinationStatus" class="micro-text"></p>
+      </div>
+    </section>
+
+    <section id="screen-result-nearby" class="screen result-screen">
+      <button class="back-btn" data-back="screen-mode" aria-label="返回">←</button>
+      <div class="result-head">
+        <div><div id="nearbyWeatherIcon" class="big-weather">☀️</div><div id="nearbyTemp" class="temp-line">--°</div></div>
+        <div id="nearbyHeadline" class="result-headline">輕鬆穿</div>
+      </div>
+      <div class="weather-halo halo-nearby" aria-hidden="true"></div>
+      <div id="nearbyCharacter" class="character-stage solo"></div>
+      <div id="nearbyAccessories" class="accessory-row"></div>
+      <button class="ghost-btn restart-btn">重選</button>
+    </section>
+
+    <section id="screen-result-trip" class="screen result-screen trip-result">
+      <button class="back-btn" data-back="screen-destination" aria-label="返回">←</button>
+      <div class="trip-meta">
+        <div class="trip-point"><span id="tripCurrentIcon" class="weather-dot">☀️</span><strong id="tripCurrentTemp">--°</strong><small id="tripCurrentPlace">現在</small></div>
+        <div class="trip-line" aria-hidden="true"><span></span></div>
+        <div class="trip-point align-right"><span id="tripDestIcon" class="weather-dot">☀️</span><strong id="tripDestTemp">--°</strong><small id="tripDestPlace">目的地</small></div>
+      </div>
+      <div class="journey-stage">
+        <div class="journey-zone current-zone"><div class="scene-bubble" id="tripCurrentScene"></div><div id="tripCurrentCharacter" class="journey-character left"></div></div>
+        <div class="movement-cue" aria-hidden="true"><span></span><b>→</b></div>
+        <div class="journey-zone destination-zone"><div class="scene-bubble" id="tripDestScene"></div><div id="tripDestCharacter" class="journey-character right"></div></div>
+      </div>
+      <div id="tripHeadline" class="trip-headline"></div>
+      <div id="tripCarry" class="carry-row"></div>
+      <div id="tripEta" class="micro-text centered"></div>
+      <button class="ghost-btn restart-btn">重選</button>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="outfit.js"></script>
+  <script src="characters.js"></script>
+  <script src="google-places.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
