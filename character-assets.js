@@ -1,6 +1,5 @@
-
 const CharacterAssets = (() => {
-  const base = 'assets/characters-v9';
+  const base = 'assets/characters-v12';
 
   function weatherKey(conditions) {
     return conditions?.rain ? 'rain' : 'dry';
