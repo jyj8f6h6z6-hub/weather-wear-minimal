@@ -168,10 +168,15 @@ function haversineKm(a, b) {
 }
 function estimateTravelMinutes(a, b) {
   const km = haversineKm(a,b);
-  if (km < 3) return 20;
-  if (km < 10) return Math.round(20 + km*3.2);
-  if (km < 40) return Math.round(25 + km*2.1);
-  return Math.round(35 + km*1.35);
+  // 這不是導航時間，只作為抵達天氣的粗略時間點。
+  // 改用分段估算，避免台北→台南這類長距離被估成 6 小時以上。
+  if (km < 3) return 15;
+  if (km < 10) return 25;
+  if (km < 40) return 50;
+  if (km < 100) return 90;
+  if (km < 200) return 150;
+  if (km < 350) return 240;
+  return 360;
 }
 function hourlyAt(forecast, targetTime) {
   const target = targetTime.getTime(); let idx = 0, diff = Infinity;
@@ -232,7 +237,7 @@ function renderTrip() {
   const carry = OutfitEngine.carryAdvice(nowOutfit, destOutfit, nowCond, destCond);
   $('tripCarry').innerHTML = (carry.length ? carry : ['✓ 不用額外加東西']).map(x => `<span class="accessory-pill">${x}</span>`).join('');
   $('tripSummary').textContent = `出發體感 ${rounded(nowCond.feels)}°，抵達約 ${rounded(destCond.feels)}°。${destCond.rain ? '目的地有雨，雨具直接納入穿搭。' : '抵達後沒有明顯降雨訊號。'}`;
-  $('tripEta').textContent = `${state.destination.travelMin} 分鐘`;
+  $('tripEta').textContent = `約 ${state.destination.travelMin} 分`;
   showScreen('screen-result-trip');
 }
 
@@ -260,5 +265,15 @@ window.addEventListener('weatherwear:places-error', (e) => {
   $('destinationStatus').textContent = '這個地點暫時讀不到';
   $('destinationStatus').title = e.detail?.message || '';
 });
+
+const placesHost = $('googlePlaceHost');
+if (placesHost) {
+  placesHost.addEventListener('focusin', () => document.body.classList.add('places-open'));
+  placesHost.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      if (!placesHost.matches(':focus-within')) document.body.classList.remove('places-open');
+    }, 180);
+  });
+}
 
 mountPlaces();

@@ -72,3 +72,56 @@ button,input{font:inherit}button{color:inherit}
   .trip-bottom-grid{grid-template-columns:1fr}.trip-metrics-card{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-height:760px) and (max-width:760px){.home-copy{padding-top:3vh}.home-copy h1{font-size:54px}.home-character{top:17%;bottom:31%}.home-action-grid{gap:7px}.action-btn{padding:10px}.search-card{padding:9px 11px}}
+
+/* =========================================
+   v13.1 — overflow / autocomplete / trip polish
+========================================= */
+body{overflow-x:hidden}
+.app-shell{overflow:visible}
+
+/* 首頁改為正常文件流：Google 地點建議展開時，頁面可以跟著往下捲。 */
+.home-screen{overflow:visible}
+.home-screen.active{display:flex;flex-direction:column;min-height:100dvh}
+.home-topbar,.home-copy{flex:0 0 auto}
+.home-controls{
+  position:relative;
+  left:auto;right:auto;bottom:auto;
+  width:100%;
+  margin-top:auto;
+  padding-top:24px;
+  overflow:visible;
+}
+.search-card{position:relative;z-index:30;overflow:visible}
+.google-place-host{position:relative;z-index:40;overflow:visible}
+.home-action-grid,.tip-card{position:relative;z-index:5}
+
+/* 搜尋框有焦點時，預留可捲動空間，避免 Google 建議清單掉出視窗底部。 */
+body.places-open .home-screen{padding-bottom:390px}
+body.places-open .home-controls{margin-top:28px}
+
+/* 旅程人物完整顯示，不讓腳或雨傘被舞台裁掉。 */
+.journey-stage{height:560px}
+.journey-zone{padding:18px 8px 0}
+.journey-character .character-img{
+  width:94%;
+  height:90%;
+  max-width:94%;
+  object-fit:contain;
+  object-position:center bottom;
+}
+.current-zone .character-img{object-position:center bottom}
+.destination-zone .character-img{object-position:center bottom}
+
+/* 小幅降低結果頁資訊密度，讓人物與文字層級更接近 Demo。 */
+.trip-bottom-grid{margin-top:16px}
+.trip-advice-card,.trip-metrics-card{padding:20px}
+.trip-advice-card h2{line-height:1.08}
+
+@media(max-width:760px){
+  .home-screen.active{min-height:100svh}
+  .home-controls{left:auto;right:auto;bottom:auto;padding-top:18px}
+  body.places-open .home-screen{padding-bottom:330px}
+  .journey-stage{height:52dvh;min-height:430px}
+  .journey-zone{padding:12px 2px 0}
+  .journey-character .character-img{width:96%;max-width:96%;height:88%}
+}
